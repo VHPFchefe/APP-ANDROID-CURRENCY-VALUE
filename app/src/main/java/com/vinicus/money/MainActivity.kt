@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
         val selected = findViewById<RadioGroup>(R.id.radioGroup)
         val checked = selected.checkedRadioButtonId
         val originValue = "BRL"
+        val apiKey= "temChaveNaoRapa"
         val currency = when {
             checked == R.id.radio_usd -> "USD" //Doletas
             checked == R.id.radio_euro -> "EUR" //Eurecas
@@ -41,16 +42,16 @@ class MainActivity : AppCompatActivity() {
         val edit_field = findViewById<EditText>(R.id.editField)
         val value = edit_field.text.toString()
 
-        if (value.isEmpty())
+        if (value.isEmpty()){
+            result.text ="Digite um valor!"
+            result.visibility = TextView.VISIBLE
             return
-
-
-
+        }
         Thread {
             // PROCESSO PARALELO DO OPOSTO DA HIPOTENUSA DO CATETO
 
             val url =
-                URL("https://free.currconv.com/api/v7/convert?q=${currency}_${originValue}&compact=ultra&apiKey=temChaveNaoRapa")
+                URL("https://free.currconv.com/api/v7/convert?q=${currency}_${originValue}&compact=ultra&apiKey=${apiKey}")
             val con = url.openConnection() as HttpsURLConnection
             try {
                 val data = con.inputStream.bufferedReader().readText()
